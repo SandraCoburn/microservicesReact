@@ -17,6 +17,6 @@ Microservices with Node JS and React
   - Generate a new React App using Create-React-App
 - `Node JS`
   - Create an Express-based project for the `Posts` Service
-  - Create an Express-based project for the Comments" Service
+  - Create an Express-based project for the `Comments` Service
 - `Docker`
 - `Kubernetes`
