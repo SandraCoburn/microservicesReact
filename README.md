@@ -4,6 +4,11 @@ Microservices with Node JS and React
 
 ##### Services
 
+- Client service
+
+  - Create a simple form to consume Post and Comments services
+  - Use [BootstrapCDN](https://getbootstrap.com/docs/5.0/getting-started/download/) - copy and paste CDN to add to html public file to style the form
+
 - Post service
   - Create a Post
   - List all Posts
@@ -27,7 +32,7 @@ Microservices with Node JS and React
 |                     |        |                   |                                                             |
 
 - Comments By PostId
-  - ID of a post => [{id: "generatedid", content: 'great post'}, {id: "secondId", content: 'another post'}] /_array of comments_/
+  - ID of a post => [{id: "generatedid", content: 'great post'}, {id: "secondId", content: 'another post'}] <-/_array of comments_/
 
 ## Tech Stack
 

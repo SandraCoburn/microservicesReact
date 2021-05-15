@@ -2,10 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 //To create a random id for posts we use crypto
 const { randomBytes } = require('crypto');
+const cors = require('cors');
 
 const app = express();
 app.use(bodyParser.json());
-
+app.use(cors());
 //Save data on memory by creating an empty object for posts
 const posts = {};
 
