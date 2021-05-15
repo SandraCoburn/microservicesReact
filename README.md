@@ -11,6 +11,13 @@ Microservices with Node JS and React
   - Create a comment (asynchronous communication with List all posts)
   - List all comments (Tied to posts by user)
 
+| Post Services |        |                 |                    |
+| ------------- | ------ | --------------- | ------------------ |
+| Path          | Method | Body?           | Goal               |
+| /post         | POST   | {title: String} | Create a new post  |
+| /posts        | GET    | -               | Retrieve all posts |
+|               |        |                 |                    |
+
 ## Tech Stack
 
 - `React`
