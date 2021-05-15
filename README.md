@@ -7,9 +7,6 @@ Microservices with Node JS and React
 - Post service
   - Create a Post
   - List all Posts
-- Comment service
-  - Create a comment (asynchronous communication with List all posts)
-  - List all comments (Tied to posts by user)
 
 | Post Services |        |                 |                    |
 | ------------- | ------ | --------------- | ------------------ |
@@ -17,6 +14,20 @@ Microservices with Node JS and React
 | /post         | POST   | {title: String} | Create a new post  |
 | /posts        | GET    | -               | Retrieve all posts |
 |               |        |                 |                    |
+
+- Comment service
+  - Create a comment (asynchronous communication with List all posts)
+  - List all comments (Tied to posts by user)
+
+| Comments Services   |        |                   |                                                             |
+| ------------------- | ------ | ----------------- | ----------------------------------------------------------- |
+| Path                | Method | Body?             | Goal                                                        |
+| /posts/:id/comments | POST   | {content: String} | Create a new post cp,,emt associated with the given post ID |
+| /posts/:id/comments | GET    | -                 | Retrieve all comments associated with the given post ID     |
+|                     |        |                   |                                                             |
+
+- Comments By PostId
+  - ID of a post => [{id: "generatedid", content: 'great post'}, {id: "secondId", content: 'another post'}] /_array of comments_/
 
 ## Tech Stack
 
