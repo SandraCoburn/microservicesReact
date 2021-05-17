@@ -1,6 +1,16 @@
 # microservicesReact
 
-Microservices with Node JS and React
+Microservices with Node JS and React. Building a little app from scratch.
+
+## Tech Stack
+
+- `React`
+  - Generate a new React App using Create-React-App
+- `Node JS`
+  - Create an Express-based project for the `Posts` Service
+  - Create an Express-based project for the `Comments` Service
+- `Docker`
+- `Kubernetes`
 
 ##### Services
 
@@ -34,12 +44,12 @@ Microservices with Node JS and React
 - Comments By PostId
   - ID of a post => [{id: "generatedid", content: 'great post'}, {id: "secondId", content: 'another post'}] <-/_array of comments_/
 
-## Tech Stack
+### Request Minimization Strategies
 
-- `React`
-  - Generate a new React App using Create-React-App
-- `Node JS`
-  - Create an Express-based project for the `Posts` Service
-  - Create an Express-based project for the `Comments` Service
-- `Docker`
-- `Kubernetes`
+- A `Monoliths` appplication is built as a single unit. A monolithic application is self-contained and independent from other computing applications.
+- `Microservices` are an architectural aproach to building applications. As an architectural framework, microservices are distributed and loosely coupled, so one team's changes won't break the entire app. When using `microservices`, you isolate software functionality into multiple independent modules that are individually responsible for performing precisely defined, standalone tasks. These modules communicate with each other through simple, universally accesible application programming interfaces (APIs).
+- `Synch communication` - Introduces a dependency between services. If any inter-service request fails, the overall request fails. The entire reques is only as fast as the slowest request. Can easily introduce webs of requests.
+- `Async Communication` - <strong>Post service</strong> -> Will emit an event any time a post is created. <strong>Comments Service</strong> -> Will emit an event any time a comment is created. <strong>Query Service</strong> -> Assembles all of the blogs + comments into an efficient data structure. <strong>Event Broker</strong> -> Receives events, sends them on to interested parties.
+  - `Notes on Async Communication,` - Pros: Query Service has zero dependencies on other services. Query Service will be extremely fast. - Cons: Data duplication, harder to understand.
+  - We'll build an `event bus` with Javascript and Express to keep track of all the events in the app.
+    - Event bus receives events, publishes them to listeners. Many different subtle features that make async communication way easier or way harder.
