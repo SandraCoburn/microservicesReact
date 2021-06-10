@@ -12,7 +12,7 @@ Microservices with Node JS and React. Building a little app from scratch.
 - `Docker`
 - `Kubernetes`
 
-##### Services
+##### Micro Services
 
 - Client service
 
@@ -33,6 +33,8 @@ Microservices with Node JS and React. Building a little app from scratch.
 - Comment service
   - Create a comment (asynchronous communication with List all posts)
   - List all comments (Tied to posts by user)
+  - In charge of all business logic around a comment
+  - It will process events to update status and will generate an updated event to other services
 
 | Comments Services   |        |                   |                                                             |
 | ------------------- | ------ | ----------------- | ----------------------------------------------------------- |
@@ -42,7 +44,27 @@ Microservices with Node JS and React. Building a little app from scratch.
 |                     |        |                   |                                                             |
 
 - Comments By PostId
+
   - ID of a post => [{id: "generatedid", content: 'great post'}, {id: "secondId", content: 'another post'}] <-/_array of comments_/
+
+- Event Bus Service
+
+  - All events hit the endpoint for this event bus
+  - Front end get the posts from the event bus instead of each different service
+
+- Query Service -
+
+  - The query service is about presentation logic
+  - It is joining two resources right now (posts and comments)
+    , but it might join 10
+  - This service will utilize a moderation service to flag comments
+  - Query service will only listens for 'update' events
+
+- Moderation Service
+  - Will send events when moderation is done sending a status event back.
+    - Default status will be pending - will send a message to alert of status
+    - After comment is approved the status will update to approved
+    - The frontend won't need to use this service so we won't install cors
 
 ### Request Minimization Strategies
 
