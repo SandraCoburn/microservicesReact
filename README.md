@@ -273,3 +273,18 @@ FROM node:alpine
   ```
   docker run -p 8080:8080 <image name>
   ```
+- Specifying a Working Directory to copy our project files into Docker image
+  Change the Docker file to add a new line of instructions
+  - `WORKDIR /usr/app`
+  - Rebuild the image
+  - Check for files in shell
+  ```
+  docker ps
+  docker exec -it <image id> sh
+  ls
+  ```
+  When we modify our app files the changes by default don't go to our Docker container. To update changes we need to rebuild the whole container again. To fix this and prevent unnecessary rebuilds we will change the Dockerfile specs by copying only the json package instead of all file.
+  - `COPY ./package.json ./`
+  - `RUN npm install`
+  - `COPY ./ ./`
+  - Then run the build command again: `docker build -t sandra/simpleweb .`
