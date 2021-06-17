@@ -245,3 +245,31 @@ docker ps
 docker commit -c 'CMD ["redis-server"]' <id of running container>
 docker run <container id>
 ```
+
+### Create a Docker file for Node
+
+- 1. Create Node JS web app
+- 2. Create a Dockerfile
+- 3. Build image from dockerfile
+- 4. Run image as container
+- 5. Connect to web app from a browser
+
+If we use Alpine image for our project it will give us this error message because Alpine doesn't have node pre installed:
+
+```
+ /bin/sh: npm: not found
+```
+
+[Hub Docker](https://hub.docker.com/)/explore has pre made images that we can use in our projects. We can use node image to install in our simpleweb project
+
+- To fix the error we use the following command in our Dockerfile:
+
+```
+FROM node:alpine
+```
+
+- Container Port Forwarding
+  - Set up Docker Run with Port Mapping
+  ```
+  docker run -p 8080:8080 <image name>
+  ```
