@@ -80,7 +80,7 @@ Microservices with Node JS and React. Building a little app from scratch.
   - We'll build an `event bus` with Javascript and Express to keep track of all the events in the app.
     - Event bus receives events, publishes them to listeners. Many different subtle features that make async communication way easier or way harder.
 
-#### Docker and Kubernetes
+### Docker and Kubernetes
 
 - Docker Containers wrap up everything that is needed for a program + how to start and run it without worrying about setup or dependencies
 - Kubernetes is a tool for running a bunch of different container
@@ -98,7 +98,7 @@ Microservices with Node JS and React. Building a little app from scratch.
   - Namespacing and Control Groups belong to Linux OS
   - When we install Docker in Mac we install a Linux Virtual Machine
 
-  ##### Docker CL Commands
+  #### Docker CL Commands
 
   - To create and run a container from an image (docker run = docker create + docker start)
 
