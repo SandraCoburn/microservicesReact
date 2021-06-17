@@ -207,7 +207,7 @@ cmm C to end it or type: exit
 - Buildkit for Docker Desktop v2.4.0+ and Edge
   - Recent versions of Docker have Builtkit enabled by default
 
-##### Building a Dockerfile -> Create an image that runs redis-server
+### Building a Dockerfile -> Create an image that runs redis-server
 
 - Create a new directory anywhere in the machine
 
@@ -242,6 +242,6 @@ docker run sandra/redis
 dockr run -it alpine sh
 apk add --update redis
 docker ps
-docker commit -c 'CMD ["reids-server"]' <id of running container>
+docker commit -c 'CMD ["redis-server"]' <id of running container>
 docker run <container id>
 ```
