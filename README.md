@@ -98,7 +98,7 @@ Microservices with Node JS and React. Building a little app from scratch.
   - Namespacing and Control Groups belong to Linux OS
   - When we install Docker in Mac we install a Linux Virtual Machine
 
-  #### Docker CL Commands
+  ### Docker CL Commands
 
   - To create and run a container from an image (docker run = docker create + docker start)
 
@@ -193,7 +193,7 @@ sh command will run a Unix environment to have full terminal acces like: cd ~/, 
 ```
 docker run -it busybox sh
 ls
-cmm C to end it or type: exit
+cmm D to end it or type: exit
 
 ```
 
@@ -275,16 +275,24 @@ FROM node:alpine
   ```
 - Specifying a Working Directory to copy our project files into Docker image
   Change the Docker file to add a new line of instructions
+
   - `WORKDIR /usr/app`
   - Rebuild the image
   - Check for files in shell
+
   ```
   docker ps
   docker exec -it <image id> sh
   ls
   ```
+
   When we modify our app files the changes by default don't go to our Docker container. To update changes we need to rebuild the whole container again. To fix this and prevent unnecessary rebuilds we will change the Dockerfile specs by copying only the json package instead of all file.
+
   - `COPY ./package.json ./`
   - `RUN npm install`
   - `COPY ./ ./`
   - Then run the build command again: `docker build -t sandra/simpleweb .`
+
+  ### Kubernetes Cluster
+
+  - Each Node(virtual machine) in a Kubernetes cluster will run a Container. Kubernetes can send requests from one container to another one.
