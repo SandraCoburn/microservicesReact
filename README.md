@@ -295,4 +295,33 @@ FROM node:alpine
 
   ### Kubernetes Cluster
 
-  - Each Node(virtual machine) in a Kubernetes cluster will run a Container. Kubernetes can send requests from one container to another one.
+  - Each Node(virtual machine) in a Kubernetes cluster will run a Container. Kubernetes can send requests from one container to another one. We give it some configuration to describe how we want our containers to run and interact with eachother.
+
+#### Kubernetes Setup
+
+- Running Docker for Mac/Windows:
+  - Click on Docker icon from machine browser
+  - Click preferences
+  - Click on Kubernetes
+  - Check Enable Kubernetes
+  - Apply & restart
+- How Kubernetes work:
+  - `Kubernetes Cluster` - A collection of nodes + a master to manage them
+  - Every Docker Container will be in a `Pod` inside a `Node`(virtual machine)
+  - `Deployment` monitors a set of pods, make sure all containers are running and restarts them if they crash
+  - `Service` gives access to containers in cluster, provides an easy to remember URL to access a running container
+- Kubernetes Config Files
+  - Tells Kubernetes about the different Deployements, Pods, and Services(referred to as 'Objects') that we want to create
+  - Written in YAML syntax
+  - Always store these files with our project source code - they are documentation
+- Command line to include yaml file to kubernetes and create a new pod
+
+```
+kubectl apply -f posts.yaml
+```
+
+- To read the pods created
+
+```
+kubectl get pods
+```
