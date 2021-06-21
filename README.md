@@ -328,14 +328,14 @@ kubectl get pods
 
 #### Common Kubectl Commands
 
-| Docker World                           | K8s World                            |
-| -------------------------------------- | ------------------------------------ |
-| docker ps                              | kubectl get pods                     |
-| docker exec -t [`container id`][`cmd`] | kubectl exec -it [`pod_name`][`cmd`] |
-| docker logs [`container id`]           | kubectl logs [`pod_name`]            |
-|                                        | kubectl delete pod [`pod_name]       |
-| kubectl apply -f [`config file name`]  |
-| kubectl describe pod [`pod_name`]      |
+| Docker World                           | K8s World                             |
+| -------------------------------------- | ------------------------------------- |
+| docker ps                              | kubectl get pods                      |
+| docker exec -t [`container id`][`cmd`] | kubectl exec -it [`pod_name`][`cmd`]  |
+| docker logs [`container id`]           | kubectl logs [`pod_name`]             |
+|                                        | kubectl delete pod [`pod_name]        |
+|                                        | kubectl apply -f [`config file name`] |
+|                                        | kubectl describe pod [`pod_name`]     |
 
 ### Deployment -> manager of a set of pods
 
