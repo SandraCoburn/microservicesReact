@@ -98,7 +98,7 @@ Microservices with Node JS and React. Building a little app from scratch.
   - Namespacing and Control Groups belong to Linux OS
   - When we install Docker in Mac we install a Linux Virtual Machine
 
-  #### Docker CL Commands
+  ### Docker CL Commands
 
   - To create and run a container from an image (docker run = docker create + docker start)
 
@@ -193,7 +193,7 @@ sh command will run a Unix environment to have full terminal acces like: cd ~/, 
 ```
 docker run -it busybox sh
 ls
-cmm C to end it or type: exit
+cmm D to end it or type: exit
 
 ```
 
@@ -275,16 +275,98 @@ FROM node:alpine
   ```
 - Specifying a Working Directory to copy our project files into Docker image
   Change the Docker file to add a new line of instructions
+
   - `WORKDIR /usr/app`
   - Rebuild the image
   - Check for files in shell
+
   ```
   docker ps
   docker exec -it <image id> sh
   ls
   ```
+
   When we modify our app files the changes by default don't go to our Docker container. To update changes we need to rebuild the whole container again. To fix this and prevent unnecessary rebuilds we will change the Dockerfile specs by copying only the json package instead of all file.
+
   - `COPY ./package.json ./`
   - `RUN npm install`
   - `COPY ./ ./`
   - Then run the build command again: `docker build -t sandra/simpleweb .`
+
+  ### Kubernetes Cluster
+
+  - Each Node(virtual machine) in a Kubernetes cluster will run a Container. Kubernetes can send requests from one container to another one. We give it some configuration to describe how we want our containers to run and interact with eachother.
+
+#### Kubernetes Setup
+
+- Running Docker for Mac/Windows:
+  - Click on Docker icon from machine browser
+  - Click preferences
+  - Click on Kubernetes
+  - Check Enable Kubernetes
+  - Apply & restart
+- How Kubernetes work:
+  - `Kubernetes Cluster` - A collection of nodes + a master to manage them
+  - Every Docker Container will be in a `Pod` inside a `Node`(virtual machine)
+  - `Deployment` monitors a set of pods, make sure all containers are running and restarts them if they crash
+  - `Service` gives access to containers in cluster, provides an easy to remember URL to access a running container
+- Kubernetes Config Files
+  - Tells Kubernetes about the different Deployements, Pods, and Services(referred to as 'Objects') that we want to create
+  - Written in YAML syntax
+  - Always store these files with our project source code - they are documentation
+- Command line to include yaml file to kubernetes and create a new pod
+
+```
+kubectl apply -f posts.yaml
+```
+
+- To read the pods created
+
+```
+kubectl get pods
+```
+
+#### Common Kubectl Commands
+
+| Docker World                           | K8s World                            |
+| -------------------------------------- | ------------------------------------ |
+| docker ps                              | kubectl get pods                     |
+| docker exec -t [`container id`][`cmd`] | kubectl exec -it [`pod_name`][`cmd`] |
+| docker logs [`container id`]           | kubectl logs [`pod_name`]            |
+|                                        | kubectl delete pod [`pod_name]       |
+| kubectl apply -f [`config file name`]  |
+| kubectl describe pod [`pod_name`]      |
+
+### Deployment -> manager of a set of pods
+
+- If any pod crashes deployment will re create it again
+- To update code in different containers like a new version. Deployment will take care of this update automatically
+
+#### Create a Deployment
+
+- Delete the posts.yaml file and create a new one: posts-depl.yaml. Add new conf.
+
+#### Deployment Commands
+
+- kubectl get deployments
+- kubectl describe deployment [depl name]
+- kubectl apply -f [config file name]
+- kubectl delete deployment [depl_name]
+
+#### Updating the Image Used By a Deployment
+
+- Method #1 steps:
+  - Make a change to your project code
+  - Rebuild the image, specifying a new imae version
+  - In the deployment config file, update the version of the image
+  - Run the command: kubectil apply -f [depl file name]
+- Method #2 - preferred
+  - The deployment must be usig the 'latest' tag in the pod spec section
+  - Make an update to your code
+  - Go into deployment yaml file and change the conf to the image not to have a version. ex. image: sandracoburn/posts:latest
+  - Build the image:
+    - We tell kubernetes to apply the latest version. In command line: kubectl apply -f posts-depl.yaml
+    - docket build -d sandracoburn/posts .
+  - Push the image to docker hub
+    - docker push sandracoburn/posts
+  - Run the command: kubectl rollout restart deployment [depl_name]
