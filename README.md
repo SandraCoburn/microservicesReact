@@ -325,3 +325,48 @@ kubectl apply -f posts.yaml
 ```
 kubectl get pods
 ```
+
+#### Common Kubectl Commands
+
+| Docker World                           | K8s World                            |
+| -------------------------------------- | ------------------------------------ |
+| docker ps                              | kubectl get pods                     |
+| docker exec -t [`container id`][`cmd`] | kubectl exec -it [`pod_name`][`cmd`] |
+| docker logs [`container id`]           | kubectl logs [`pod_name`]            |
+|                                        | kubectl delete pod [`pod_name]       |
+| kubectl apply -f [`config file name`]  |
+| kubectl describe pod [`pod_name`]      |
+
+### Deployment -> manager of a set of pods
+
+- If any pod crashes deployment will re create it again
+- To update code in different containers like a new version. Deployment will take care of this update automatically
+
+#### Create a Deployment
+
+- Delete the posts.yaml file and create a new one: posts-depl.yaml. Add new conf.
+
+#### Deployment Commands
+
+- kubectl get deployments
+- kubectl describe deployment [depl name]
+- kubectl apply -f [config file name]
+- kubectl delete deployment [depl_name]
+
+#### Updating the Image Used By a Deployment
+
+- Method #1 steps:
+  - Make a change to your project code
+  - Rebuild the image, specifying a new imae version
+  - In the deployment config file, update the version of the image
+  - Run the command: kubectil apply -f [depl file name]
+- Method #2 - preferred
+  - The deployment must be usig the 'latest' tag in the pod spec section
+  - Make an update to your code
+  - Go into deployment yaml file and change the conf to the image not to have a version. ex. image: sandracoburn/posts:latest
+  - Build the image:
+    - We tell kubernetes to apply the latest version. In command line: kubectl apply -f posts-depl.yaml
+    - docket build -d sandracoburn/posts .
+  - Push the image to docker hub
+    - docker push sandracoburn/posts
+  - Run the command: kubectl rollout restart deployment [depl_name]
