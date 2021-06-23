@@ -370,3 +370,41 @@ kubectl get pods
   - Push the image to docker hub
     - docker push sandracoburn/posts
   - Run the command: kubectl rollout restart deployment [depl_name]
+
+### Networking With Services
+
+- Type of Services:
+  - `Cluster IP` -> Sets up an easy to remember URL to acces a pod. Only exposes pods in the cluster
+  - `Node Port` -> Makes a pod accesible from outside the cluster. Usually ony used for dev purposes
+  - `Load Balancer` -> Makes a pod accessible from outside the cluster. This is the right way to expose a pod to the outside world
+  - `External Name` -> Redirects an in-cluster request to a CNAME url
+- To create a service
+  - Create a new yaml file in infra folder ex. posts-srv.yaml
+  - Configure the posts-srv file to create new service
+  - In CL inside the k8s folder run this command to create service in Kubernetes:
+  ```
+  kubectls apply -f posts-srv.yaml
+  To get a list of all services:
+  kubectl get services
+  To get port number:
+  kubectl describe service posts-srv
+  To access in localhost copy the port and open in browser(access container inside of a cluster):
+  localhost:31940/posts
+  ```
+
+#### Cluster IP Services
+
+Pods will reach out to Cluster IP Service to access resources from each other
+
+### For every service:
+
+- Build an `Image` for the service(event bus, comments, etc)
+  - ex. docker build -t sandracoburn/event-bus .
+- `Push` the image to Docker Hub
+  - ex. docker push sandracoburn/event-bus
+- Create a `deployment` pod for each service and configure in own yaml file, then run yaml file inside k8s
+  - ex. kubectl apply -f event-bus-depl.yaml
+- Create a `Cluster IP service` for each service
+  - Inside depl.yamls file from each service add cluster Ip config at the bottom
+  - run it inside k8s file in CL: ex. kubectl apply -f event-bus-depl.yaml
+- Wire it all up
