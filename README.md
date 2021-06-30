@@ -293,6 +293,12 @@ FROM node:alpine
   - `COPY ./ ./`
   - Then run the build command again: `docker build -t sandra/simpleweb .`
 
+  #### Docker login
+
+  ```
+  docker login -u <username>
+  ```
+
   ### Kubernetes Cluster
 
   - Each Node(virtual machine) in a Kubernetes cluster will run a Container. Kubernetes can send requests from one container to another one. We give it some configuration to describe how we want our containers to run and interact with eachother.
@@ -366,10 +372,10 @@ kubectl get pods
   - Go into deployment yaml file and change the conf to the image not to have a version. ex. image: sandracoburn/posts:latest
   - Build the image:
     - We tell kubernetes to apply the latest version. In command line: kubectl apply -f posts-depl.yaml
-    - docket build -d sandracoburn/posts .
+    - `docket build -d sandracoburn/posts .`
   - Push the image to docker hub
-    - docker push sandracoburn/posts
-  - Run the command: kubectl rollout restart deployment [depl_name]
+    - `docker push sandracoburn/posts`
+  - Run the command: `kubectl rollout restart deployment [depl_name]`
 
 ### Networking With Services
 
@@ -408,3 +414,14 @@ Pods will reach out to Cluster IP Service to access resources from each other
   - Inside depl.yamls file from each service add cluster Ip config at the bottom
   - run it inside k8s file in CL: ex. kubectl apply -f event-bus-depl.yaml
 - Wire it all up
+
+#### Communicating between services
+
+- Get a list of all services:
+
+```
+kubectl get services
+```
+
+- From result find the local host port name and change it in the service's server request code
+  - ex, from http://localhost:4000/posts to http://posts-clusterip-srv:4000/posts
